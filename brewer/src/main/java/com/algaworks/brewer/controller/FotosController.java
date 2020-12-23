@@ -10,32 +10,30 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.algaworks.brewer.dto.FotosDTO;
+import com.algaworks.brewer.dto.FotoDTO;
 import com.algaworks.brewer.storage.FotoStorage;
-import com.algaworks.brewer.storage.FotosStorageRunnable;
+import com.algaworks.brewer.storage.FotoStorageRunnable;
 
 @RestController
 @RequestMapping("/fotos")
 public class FotosController {
-	
+
 	@Autowired
-	FotoStorage fotoStorage;
-
+	private FotoStorage fotoStorage;
+	
 	@PostMapping
-	public DeferredResult<FotosDTO> upload(@RequestParam("files[]") MultipartFile[] files) {
+	public DeferredResult<FotoDTO> upload(@RequestParam("files[]") MultipartFile[] files) {
+		DeferredResult<FotoDTO> resultado = new DeferredResult<>();
 
-		
-		DeferredResult<FotosDTO> resultado = new DeferredResult<FotosDTO>();
-		
-		Thread thread = new Thread( new FotosStorageRunnable(files, resultado, fotoStorage));
+		Thread thread = new Thread(new FotoStorageRunnable(files, resultado, fotoStorage));
 		thread.start();
- 		
+		
 		return resultado;
 	}
 	
-	@GetMapping("/tempo/{nome:.*}")
+	@GetMapping("/temp/{nome:.*}")
 	public byte[] recuperarFotoTemporaria(@PathVariable String nome) {
 		return fotoStorage.recuperarFotoTemporaria(nome);
 	}
-
+	
 }
