@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import com.algaworks.brewer.validation.SKU;
 
@@ -185,6 +186,11 @@ public class Cerveja {
 	public void prePersistUpdate() {
 		sku = sku.toUpperCase();
 	}	
+	
+	public String getCervejaOrMock() {
+		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
+	}
+	
 	
 	@Override
 	public int hashCode() {
