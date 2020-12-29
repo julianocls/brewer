@@ -1,4 +1,4 @@
-package com.algaworks.brewer.service;
+package com.algaworks.brewer.service.event.cerveja;
 
 import org.springframework.util.StringUtils;
 

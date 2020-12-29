@@ -108,7 +108,7 @@
 				<tbody>
 					<tr th:each="cerveja : ${cervejas}">
 						<td class="text-center">
-							<img th:src="@{/fotos/{foto}(foto=${cerveja.foto})}" class="img-responsive"/>
+							<img th:src="@{/fotos/thumbnail.{foto}(foto=${cerveja.fotoOuMock})}" class="img-responsive"/>
 						</td>
 						<td class="text-center" th:text="${cerveja.sku}">AA1234</td>
 						<td th:text="${cerveja.nome}">Cerveja Stella</td>
@@ -124,8 +124,8 @@
 							</a>
 						</td>
 					</tr>
-					<tr th:if="#{lists.empty(cerveja)}">
-						<td  align="center" colspan="7">Nenhuma cerveja encontrada</td>
+					<tr th:if="${#lists.isEmpty(cervejas)}">
+						<td colspan="7">Nenhuma cerveja encontrada</td>
 					</tr>
 				</tbody>
 			</table>

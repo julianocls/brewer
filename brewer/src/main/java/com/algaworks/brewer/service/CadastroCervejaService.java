@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.brewer.model.Cerveja;
 import com.algaworks.brewer.repository.Cervejas;
+import com.algaworks.brewer.service.event.cerveja.CervejaSalvaEvent;
 
 @Service
 public class CadastroCervejaService {
@@ -16,11 +17,12 @@ public class CadastroCervejaService {
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
-
+	
 	@Transactional
 	public void salvar(Cerveja cerveja) {
 		cervejas.save(cerveja);
 		
 		publisher.publishEvent(new CervejaSalvaEvent(cerveja));
 	}
+	
 }
