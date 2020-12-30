@@ -67,7 +67,7 @@
 					<div>
 	  					<th:block th:each="origem : ${origens}">
 	  						<div class="radio  radio-inline">
-		    					<input th:id="|id_${origem}|" type="radio" th:value="${origem}"  th:field="*{origem}"/>
+		    					<input th:id="|id_${origem}|" type="radio" th:value="${origem}" th:field="*{origem}"/>
 		    					<label th:for="|id_${origem}|" th:text="${origem.descricao}">Nacional</label>
 	    					</div>
 	  					</th:block>
@@ -131,13 +131,12 @@
 			</table>
 		</div>
 		
-		<div class="col-sm-12 text-center" th:if="${not #lists.isEmpty(pagina.content)}">
+		<div class="col-sm-12  text-center" th:if="${not #lists.isEmpty(pagina.content)}">
 			<nav>
-				<ul class="pagination pagination-sm">
+				<ul class="pagination  pagination-sm">
 					<li class="disabled">
-						<a href="#">&laquo;</a>
-					</li>					<li>
-					
+						<a href="#"><span>&laquo;</span></a>
+					</li>
 					<th:block th:each="p : ${#numbers.sequence(1, pagina.totalPages)}">
 						<li>
 							<a th:href="|?page=${p - 1}|">[[${p}]]</a>
@@ -145,8 +144,8 @@
 					</th:block>
 					
 					<li class="disabled">
-						<a href="#">&raquo;</a>
-					</li>	
+						<a href="#"><span>&raquo;</span></a>
+					</li>
 				</ul>
 			</nav>
 		</div>
