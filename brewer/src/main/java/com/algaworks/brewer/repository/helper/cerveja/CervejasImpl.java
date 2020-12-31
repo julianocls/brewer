@@ -39,6 +39,13 @@ public class CervejasImpl implements CervejasQueries {
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
+	
+	private Long total(CervejaFilter filtro) {
+		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cerveja.class);
+		adicionarFiltro(filtro, criteria);
+		criteria.setProjection(Projections.rowCount());
+		return (Long) criteria.uniqueResult();
+	}
 
 	private void adicionarFiltro(CervejaFilter filtro, Criteria criteria) {
 		if (filtro != null) {
@@ -72,13 +79,6 @@ public class CervejasImpl implements CervejasQueries {
 		}
 	}
 	
-	private Long total(CervejaFilter filtro) {
-		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cerveja.class);
-		//adicionarFiltro(filtro, criteria);
-		criteria.setProjection(Projections.rowCount());		
-		return (Long) criteria.uniqueResult();
-	}
-
 	private boolean isEstiloPresente(CervejaFilter filtro) {
 		return filtro.getEstilo() != null && filtro.getEstilo().getCodigo() != null;
 	}
