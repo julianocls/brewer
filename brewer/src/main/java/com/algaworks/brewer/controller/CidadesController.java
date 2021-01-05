@@ -29,9 +29,6 @@ public class CidadesController {
 		
 		attributes.addFlashAttribute("mensagem", "Cidade salva com sucesso");
 		return "redirect:/cidades/novo";
-	}
-	
-	//alteracao teste
-	
+	}	
 	
 }
