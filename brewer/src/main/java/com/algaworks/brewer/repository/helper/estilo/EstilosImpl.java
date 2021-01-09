@@ -20,10 +20,10 @@ import com.algaworks.brewer.repository.filter.EstiloFilter;
 import com.algaworks.brewer.repository.paginacao.PaginacaoUtil;
 
 public class EstilosImpl implements EstilosQueries {
-
+	
 	@PersistenceContext
 	private EntityManager manager;
-
+	
 	@Autowired
 	private PaginacaoUtil paginacaoUtil;
 
@@ -34,7 +34,6 @@ public class EstilosImpl implements EstilosQueries {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Estilo.class);
 		
 		paginacaoUtil.preparar(criteria, pageable);
-		
 		adicionarFiltro(filtro, criteria);
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
@@ -49,14 +48,9 @@ public class EstilosImpl implements EstilosQueries {
 
 	private void adicionarFiltro(EstiloFilter filtro, Criteria criteria) {
 		if (filtro != null) {
-			if (!StringUtils.isEmpty(filtro.getCodigo())) {
-				criteria.add(Restrictions.eq("codigo", filtro.getCodigo()));
-			}
-			
 			if (!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
 			}
-
 		}
 	}
 

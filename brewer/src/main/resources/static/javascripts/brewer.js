@@ -16,8 +16,6 @@ Brewer.MaskMoney = (function() {
 	
 }());
 
-
-
 Brewer.MaskPhoneNumber = (function() {
 	
 	function MaskPhoneNumber() {
@@ -42,23 +40,19 @@ Brewer.MaskPhoneNumber = (function() {
 	
 }());
 
-
-
 Brewer.MaskCep = (function() {
 	
 	function MaskCep() {
-		this.inputCep = $('.js-input-cep');
+		this.inputCep = $('.js-cep');
 	}
 	
 	MaskCep.prototype.enable = function() {
-		this.inputCep.mask("00.000-000");		
+		this.inputCep.mask('00.000-000');
 	}
-
+	
 	return MaskCep;
 	
 }());
-
-
 
 $(function() {
 	var maskMoney = new Brewer.MaskMoney();
@@ -69,6 +63,5 @@ $(function() {
 	
 	var maskCep = new Brewer.MaskCep();
 	maskCep.enable();
+	
 });
-
-

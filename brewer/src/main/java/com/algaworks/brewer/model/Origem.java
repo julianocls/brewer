@@ -1,9 +1,9 @@
 package com.algaworks.brewer.model;
 
 public enum Origem {
-	
+
 	NACIONAL("Nacional"),
-	INTERNACIONAL ("Internacional");
+	INTERNACIONAL("Internacional");
 	
 	private String descricao;
 	
@@ -11,8 +11,8 @@ public enum Origem {
 		this.descricao = descricao;
 	}
 	
-	public String getDescricao() {
-		return this.descricao;
+	public String getDescricao() { 
+		return descricao;
 	}
-
+	
 }

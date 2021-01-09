@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class PageWrapper<T> {
@@ -17,10 +16,10 @@ public class PageWrapper<T> {
 
 	public PageWrapper(Page<T> page, HttpServletRequest httpServletRequest) {
 		this.page = page;
-		String httpUrl = httpServletRequest.getRequestURL()
-				.append(httpServletRequest.getQueryString() != null ? "?" + httpServletRequest.getQueryString() : "")
+		String httpUrl = httpServletRequest.getRequestURL().append(
+				httpServletRequest.getQueryString() != null ? "?" + httpServletRequest.getQueryString() : "")
 				.toString().replaceAll("\\+", "%20");
-		this.uriBuilder = ServletUriComponentsBuilder.fromHttpUrl(httpUrl);
+		this.uriBuilder = UriComponentsBuilder.fromHttpUrl(httpUrl);
 	}
 	
 	public List<T> getConteudo() {
@@ -64,7 +63,7 @@ public class PageWrapper<T> {
 		String direcao = "asc";
 		
 		Order order = page.getSort() != null ? page.getSort().getOrderFor(propriedade) : null;
-		if(order != null) {
+		if (order != null) {
 			direcao = Sort.Direction.ASC.equals(order.getDirection()) ? "desc" : "asc";
 		}
 		
@@ -76,8 +75,9 @@ public class PageWrapper<T> {
 	}
 	
 	public boolean ordenada(String propriedade) {
-		Order order = page.getSort() != null ? page.getSort().getOrderFor(propriedade) : null;
-		if(order == null) {
+		Order order = page.getSort() != null ? page.getSort().getOrderFor(propriedade) : null; 
+		
+		if (order == null) {
 			return false;
 		}
 		

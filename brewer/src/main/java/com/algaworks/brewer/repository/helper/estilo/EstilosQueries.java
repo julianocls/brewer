@@ -7,7 +7,7 @@ import com.algaworks.brewer.model.Estilo;
 import com.algaworks.brewer.repository.filter.EstiloFilter;
 
 public interface EstilosQueries {
-
+	
 	public Page<Estilo> filtrar(EstiloFilter filtro, Pageable pageable);
 	
 }

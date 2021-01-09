@@ -1,35 +1,25 @@
 package com.algaworks.brewer.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name = "estilo")
-public class Estilo implements Serializable {
+@Table(name = "estado")
+public class Estado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long codigo;
+	private String nome;
+	private String sigla;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long codigo;
-
-	@NotBlank(message = "O nome é obrigatório")
-	@Size(max = 20, message = "O tamanho do nome não pode ser maior que {max} caracteres")
-	private String nome;
-	
-	@OneToMany(mappedBy = "estilo")
-	private List<Cerveja> cervejas;
-
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -44,6 +34,14 @@ public class Estilo implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
 	}
 
 	@Override
@@ -62,7 +60,7 @@ public class Estilo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estilo other = (Estilo) obj;
+		Estado other = (Estado) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;

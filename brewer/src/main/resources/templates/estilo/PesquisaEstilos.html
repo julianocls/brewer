@@ -2,7 +2,7 @@
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="'layout/LayoutPadrao'"
+	layout:decorate="layout/LayoutPadrao"
 	xmlns:brewer="http://brewer.algaworks.com">
 	
 <head>
@@ -32,9 +32,9 @@
 	<div class="container-fluid">
 		<form method="GET" th:object="${estiloFilter}">
 			<div class="row">
-				<div class="form-group  col-sm-12" >
-					<label class="control-label" for="nome">Nome</label>
-					<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
+				<div class="form-group  col-sm-12">
+					<label class="control-label" for="nome">Estilo</label>
+					<input type="text" class="form-control" id="estilo" autofocus="autofocus" th:field="*{nome}"/>
 				</div>
 			</div>
 			
@@ -45,18 +45,18 @@
 			<table class="table  table-hover">
 				<thead>
 					<tr>
-						<th class="table-estilos-col-codigo">Codigo</th>
-						<th class="table-estilos-col-nome">
+						<th class="table-estilos-col-codigo">Código</th>
+						<th>
 							<brewer:order page="${pagina}" field="nome" text="Nome"/>
 						</th>
-						<th class="table-estilos-col-acoes"></th>
+						<th class="table-col-acoes"></th>
 					</tr>
 				</thead>
 				
 				<tbody>
 					<tr th:each="estilo : ${pagina.conteudo}">
-						<td th:text="${estilo.codigo}">1</td>
-						<td th:text="${estilo.nome}">estilo Stella</td>
+						<td class="text-center" th:text="${estilo.codigo}">1</td>
+						<td th:text="${estilo.nome}">Pale Lager</td>
 						<td class="text-center">
 							<a class="btn  btn-link  btn-xs" title="Editar"> 
 								<i class="glyphicon glyphicon-pencil"></i>
@@ -67,13 +67,13 @@
 						</td>
 					</tr>
 					<tr th:if="${pagina.vazia}">
-						<td colspan="7">Nenhum estilo encontrado</td>
+						<td colspan="3">Nenhum estilo encontrado</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		
-		<brewer:pagination page="${pagina}" />
+		<brewer:pagination page="${pagina}"/>
 		
 	</div>
 

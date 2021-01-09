@@ -3,17 +3,15 @@
 	xmlns:th="http://www.thymeleaf.org">
 	
 <th:block th:fragment="pagination (pagina)">
-
 	<div class="col-sm-12  text-center" th:if="${not pagina.vazia}">
 		<nav>
 			<ul class="pagination  pagination-sm" th:with="paginaAtual=${pagina.atual}">
 				<li th:class="${pagina.primeira} ? disabled">
 					<a th:href="${pagina.urlParaPagina(paginaAtual - 1)}" th:remove="${pagina.primeira} ? tag"><span>&laquo;</span></a>
 				</li>
-				
 				<th:block th:each="p : ${#numbers.sequence(1, pagina.total)}" th:with="numeroPagina=${p - 1}">
 					<li th:class="${paginaAtual == numeroPagina} ? active">
-						<a th:href="${pagina.urlParaPagina(numeroPagina)}" th:text="${p}"></a>
+						<a th:href="${pagina.urlParaPagina(numeroPagina)}">[[${p}]]</a>
 					</li>
 				</th:block>
 				
@@ -23,7 +21,6 @@
 			</ul>
 		</nav>
 	</div>
-	
 </th:block>
 	
 </html>
