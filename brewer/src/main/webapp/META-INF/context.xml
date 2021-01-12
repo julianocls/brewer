@@ -4,7 +4,7 @@
     <Resource name="jdbc/brewerDB" auth="Container" 
             factory="org.apache.naming.factory.BeanFactory"
             type="com.mchange.v2.c3p0.ComboPooledDataSource"
-            driverClass="com.mysql.jdbc.Driver"
+            driverClass="com.mysql.cj.jdbc.Driver"
             jdbcUrl="jdbc:mysql://localhost/brewer?useSSL=false"
             user="root"
             password="rootroot" 
