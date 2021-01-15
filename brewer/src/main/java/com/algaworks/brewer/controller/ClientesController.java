@@ -22,6 +22,9 @@ public class ClientesController {
 		mv.addObject("tiposPessoa", TipoPessoa.values());
 		mv.addObject("estados", estados.findAll());
 		return mv;
+		
+		
+		
 	}
 	
 }
