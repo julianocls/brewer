@@ -1,40 +1,52 @@
 package com.algaworks.brewer.model;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embedded;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Cliente {
-	
+public class Cliente implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
+
 	@NotBlank(message = "É obrigatório informar o nome.")
 	private String nome;
-	
-	@NotBlank(message = "É obrigatório informar o tipo.")
-	private String tipo;
-	
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_pessoa")
+	private TipoPessoa tiopPessoa;
+
 	@NotBlank(message = "É obrigatório informar o CPF/CNPJ.")
-	private Integer cpfCnpj;
-	
+	@Column(name = "cpf_cnpj")
+	private String cpfCnpj;
+
 	@NotBlank(message = "É obrigatório informar o telefone.")
 	private String telefone;
-	
+
 	@NotBlank(message = "É obrigatório informar o e-mail.")
 	private String email;
-	
-	@NotBlank(message = "'É obrigatório informar o logradouro.")
-	private String logradouro;
-	
-	@NotBlank(message = "É obrigatório informar o número")
-	private String numero;
-	
-	private String complemento;
-	
-	@NotBlank(message = "É obrigatório informar o CEP.")
-	private String cep;
-	
-	@NotBlank(message = "É obrigatório informar a cidade.")
-	private String cidade;
-	
-	@NotBlank(message = "É obrigatório informar o estado.")
-	private String estado;
+
+	@Embedded
+	private Endereco endereco;
+
+	public Long getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
+	}
 
 	public String getNome() {
 		return nome;
@@ -44,19 +56,19 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public TipoPessoa getTiopPessoa() {
+		return tiopPessoa;
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setTiopPessoa(TipoPessoa tiopPessoa) {
+		this.tiopPessoa = tiopPessoa;
 	}
 
-	public Integer getCpfCnpj() {
+	public String getCpfCnpj() {
 		return cpfCnpj;
 	}
 
-	public void setCpfCnpj(Integer cpfCnpj) {
+	public void setCpfCnpj(String cpfCnpj) {
 		this.cpfCnpj = cpfCnpj;
 	}
 
@@ -76,53 +88,37 @@ public class Cliente {
 		this.email = email;
 	}
 
-	public String getLogradouro() {
-		return logradouro;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-	public String getNumero() {
-		return numero;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
+		return result;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Cliente other = (Cliente) obj;
+		if (codigo == null) {
+			if (other.codigo != null)
+				return false;
+		} else if (!codigo.equals(other.codigo))
+			return false;
+		return true;
 	}
 
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getCep() {
-		return cep;
-	}
-
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
-		
 }
