@@ -24,7 +24,7 @@ import com.algaworks.brewer.model.validation.group.CnpjGroup;
 import com.algaworks.brewer.model.validation.group.CpfGroup;
 
 @Entity
-@Table(name="cliente")
+@Table(name = "cliente")
 @GroupSequenceProvider(ClienteGroupSequenceProvider.class)
 public class Cliente implements Serializable {
 
@@ -34,25 +34,23 @@ public class Cliente implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
 
-	@NotBlank(message = "É obrigatório informar o nome.")
+	@NotBlank(message = "Nome é obrigatório")
 	private String nome;
 
-	@NotNull
+	@NotNull(message = "Tipo pessoa é obrigatório")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_pessoa")
-	private TipoPessoa tiopPessoa;
+	private TipoPessoa tipoPessoa;
 
+	@NotBlank(message = "CPF/CNPJ é obrigatório")
 	@CPF(groups = CpfGroup.class)
 	@CNPJ(groups = CnpjGroup.class)
-	@NotBlank(message = "É obrigatório informar o CPF/CNPJ.")
 	@Column(name = "cpf_cnpj")
-	private String cpfCnpj;
+	private String cpfOuCnpj;
 
-	@NotBlank(message = "É obrigatório informar o telefone.")
 	private String telefone;
 
-	@Email(message="e-mail inválido!")
-	@NotBlank(message = "É obrigatório informar o e-mail.")
+	@Email(message = "E-mail inválido")
 	private String email;
 
 	@Embedded
@@ -74,20 +72,20 @@ public class Cliente implements Serializable {
 		this.nome = nome;
 	}
 
-	public TipoPessoa getTiopPessoa() {
-		return tiopPessoa;
+	public TipoPessoa getTipoPessoa() {
+		return tipoPessoa;
 	}
 
-	public void setTiopPessoa(TipoPessoa tiopPessoa) {
-		this.tiopPessoa = tiopPessoa;
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa;
 	}
 
-	public String getCpfCnpj() {
-		return cpfCnpj;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpfCnpj(String cpfCnpj) {
-		this.cpfCnpj = cpfCnpj;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public String getTelefone() {

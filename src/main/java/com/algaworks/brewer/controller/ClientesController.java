@@ -30,11 +30,12 @@ public class ClientesController {
 	}
 	
 	@PostMapping("/novo")
-	public ModelAndView salvar(@Valid Cliente cliente , BindingResult result, RedirectAttributes attributes) {
-		if(result.hasErrors()) {
+	public ModelAndView salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attributes) {
+		if (result.hasErrors()) {
 			return novo(cliente);
 		}
 		
+		// TODO: Salvar e adicionar mensagem
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 	}
