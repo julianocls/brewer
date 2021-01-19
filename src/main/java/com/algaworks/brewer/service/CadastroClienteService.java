@@ -12,10 +12,10 @@ public class CadastroClienteService {
 
 	@Autowired
 	private Clientes clientes;
-
+	
 	@Transactional
 	public void salvar(Cliente cliente) {
 		clientes.save(cliente);
 	}
-
+	
 }

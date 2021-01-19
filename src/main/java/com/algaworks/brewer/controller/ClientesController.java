@@ -22,6 +22,7 @@ public class ClientesController {
 	@Autowired
 	private Estados estados;
 	
+	@Autowired
 	private CadastroClienteService cadastroClienteService;
 	
 	@RequestMapping("/novo")

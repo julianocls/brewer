@@ -3,32 +3,27 @@ package com.algaworks.brewer.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 @Embeddable
 public class Endereco implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotBlank(message = "'É obrigatório informar o logradouro.")
 	private String logradouro;
-
-	@NotBlank(message = "É obrigatório informar o número")
+	
 	private String numero;
-
+	
 	private String complemento;
-
+	
 	private String cep;
-
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	@ManyToOne
 	@JoinColumn(name = "codigo_cidade")
 	private Cidade cidade;
-
+	
 	@Transient
 	private Estado estado;
 
