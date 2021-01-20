@@ -1,11 +1,14 @@
 package com.algaworks.brewer.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.algaworks.brewer.model.Cliente;
 import com.algaworks.brewer.repository.Clientes;
+import com.algaworks.brewer.service.exception.CpfCnpjJaCadastradoException;
 
 @Service
 public class CadastroClienteService {
@@ -15,6 +18,12 @@ public class CadastroClienteService {
 	
 	@Transactional
 	public void salvar(Cliente cliente) {
+		
+		Optional<Cliente> clienteExistente = clientes.findByCpfOuCnpj(cliente.getCpjOuCnpjSemFormatacao());
+		if(clienteExistente.isPresent()) {
+			throw new CpfCnpjJaCadastradoException("CPF ou CNPJ já cadastrado!");
+		}
+		
 		clientes.save(cliente);
 	}
 	

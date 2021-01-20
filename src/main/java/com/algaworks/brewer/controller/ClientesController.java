@@ -39,7 +39,13 @@ public class ClientesController {
 			return novo(cliente);
 		}
 		
-		cadastroClienteService.salvar(cliente);
+		try {
+			cadastroClienteService.salvar(cliente);			
+		} catch (Exception e) {
+			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
+			return novo(cliente);
+		}
+		
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 	}
