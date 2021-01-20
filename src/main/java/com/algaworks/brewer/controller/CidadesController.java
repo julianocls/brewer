@@ -19,7 +19,7 @@ public class CidadesController {
 	@Autowired
 	private Cidades cidades;
 
-	@RequestMapping("/nova")
+	@RequestMapping("/novo")
 	public String nova() {
 		return "cidade/CadastroCidade";
 	}
