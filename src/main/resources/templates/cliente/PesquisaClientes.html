@@ -58,6 +58,7 @@
 						</th>
 						<th class="table-clientes-col-cpf-cnpj">CPF/CNPJ</th>
 						<th class="table-clientes-col-telefone">Telefone</th>
+						<th class="table-clientes-col-cidade-estado">Cidade/Estado</th>
 						
 						<th class="table-col-acoes"></th>
 					</tr>
@@ -69,6 +70,7 @@
 						<td th:text="${cliente.tipoPessoa.descricao}">fisica</td>
 						<td th:text="${cliente.cpfOuCnpj}">111.111.111-11a</td>
 						<td th:text="${cliente.telefone}">(11) 91111-1111</td>
+						<td th:text="${cliente.endereco.nomeCidadeSiglaEstado}">(11) 91111-1111</td>
 						
 						<td class="text-center">
 							<a class="btn  btn-link  btn-xs" title="Editar"> 
