@@ -28,13 +28,13 @@ public class ClientesController {
 
 	@Autowired
 	private Estados estados;
-	
+
 	@Autowired
 	private CadastroClienteService cadastroClienteService;
-	
+
 	@Autowired
 	private Clientes clientes;
-	
+
 	@RequestMapping("/novo")
 	public ModelAndView novo(Cliente cliente) {
 		ModelAndView mv = new ModelAndView("cliente/CadastroCliente");
@@ -42,33 +42,33 @@ public class ClientesController {
 		mv.addObject("estados", estados.findAll());
 		return mv;
 	}
-	
+
 	@PostMapping("/novo")
 	public ModelAndView salvar(@Valid Cliente cliente, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return novo(cliente);
 		}
-		
+
 		try {
-			cadastroClienteService.salvar(cliente);			
+			cadastroClienteService.salvar(cliente);
 		} catch (Exception e) {
 			result.rejectValue("cpfOuCnpj", e.getMessage(), e.getMessage());
 			return novo(cliente);
 		}
-		
+
 		attributes.addFlashAttribute("mensagem", "Cliente salvo com sucesso!");
 		return new ModelAndView("redirect:/clientes/novo");
 	}
-	
+
 	@GetMapping
-	public ModelAndView pesquisar(ClienteFilter clienteFilter, BindingResult result
-			, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
+	public ModelAndView pesquisar(ClienteFilter clienteFilter, BindingResult result,
+			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("cliente/PesquisaClientes");
-		
-		PageWrapper<Cliente> paginaWrapper = new PageWrapper<>(clientes.filtrar(clienteFilter, pageable)
-				, httpServletRequest);
+
+		PageWrapper<Cliente> paginaWrapper = new PageWrapper<>(clientes.filtrar(clienteFilter, pageable),
+				httpServletRequest);
 		mv.addObject("pagina", paginaWrapper);
 		return mv;
-	}	
-	
+	}
+
 }
