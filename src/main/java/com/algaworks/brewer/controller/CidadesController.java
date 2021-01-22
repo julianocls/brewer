@@ -73,6 +73,7 @@ public class CidadesController {
 	public ModelAndView pesquisar(CidadeFilter cidadeFilter, BindingResult result,
 			@PageableDefault(size = 2) Pageable pageable, HttpServletRequest httpServletRequest) {
 		ModelAndView mv = new ModelAndView("cidade/PesquisaCidades");
+		mv.addObject("estados", estados.findAll());
 
 		PageWrapper<Cidade> pageWrapper = new PageWrapper<>(cidades.filtrar(cidadeFilter, pageable),
 				httpServletRequest);

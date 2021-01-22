@@ -53,6 +53,9 @@ public class CidadesImpl implements CidadesQueries {
 			if (!StringUtils.isEmpty(filtro.getNome())) {
 				criteria.add(Restrictions.ilike("nome", filtro.getNome(), MatchMode.ANYWHERE));
 			}
+			if (filtro.getEstado() != null) {
+				criteria.add(Restrictions.eq("estado", filtro.getEstado()));
+			}
 		}
 	}
 

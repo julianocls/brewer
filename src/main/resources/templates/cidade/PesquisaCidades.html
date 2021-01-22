@@ -32,7 +32,15 @@
 	<div class="container-fluid">
 		<form method="GET" th:object="${cidadeFilter}">
 			<div class="row">
-				<div class="form-group  col-sm-12" >
+				<div class="form-group  col-sm-4">
+					<label for="estado">Estado</label>
+					<select id="estado" class="form-control" th:field="*{estado}">
+	                    <option value="">Selecione o estado</option>
+	                    <option th:each="estado : ${estados}" th:value="${estado.codigo}" th:text="${estado.nome}">São Paulo</option>
+	                </select>
+				</div>
+							
+				<div class="form-group  col-sm-8">
 					<label class="control-label" for="nome">Nome</label>
 					<input type="text" class="form-control" id="nome" th:field="*{nome}"/>
 				</div>
@@ -50,7 +58,7 @@
 						<th class="text-right table-cidades-col-estado">
 							<brewer:order page="${pagina}" field="estado" text="Estado"/>
 						</th>
-						<th class="table-cidades-col-acoes"></th>
+						<th class="table-col-acoes"></th>
 					</tr>
 				</thead>
 				
