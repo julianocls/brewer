@@ -1,39 +1,32 @@
 package com.algaworks.brewer.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "cidade")
-public class Cidade implements Serializable {
+@Table(name = "grupo")
+public class Grupo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long codigo;
-	
-	@NotBlank(message = "Nome é obrigatório")
+
 	private String nome;
-	
-	@NotNull(message = "Estado é obrigatório")
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "codigo_estado")
-	@JsonIgnore
-	private Estado estado;
+
+	@ManyToMany
+	@JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "codigo_grupo"), inverseJoinColumns = @JoinColumn(name = "codigo_permissao"))
+	private List<Permissao> permissoes;
 
 	public Long getCodigo() {
 		return codigo;
@@ -51,18 +44,14 @@ public class Cidade implements Serializable {
 		this.nome = nome;
 	}
 
-	public Estado getEstado() {
-		return estado;
+	public List<Permissao> getPermissoes() {
+		return permissoes;
 	}
 
-	public void setEstado(Estado estado) {
-		this.estado = estado;
+	public void setPermissoes(List<Permissao> permissoes) {
+		this.permissoes = permissoes;
 	}
-	
-	public boolean temEstado() {
-		return estado != null;
-	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -79,7 +68,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Grupo other = (Grupo) obj;
 		if (codigo == null) {
 			if (other.codigo != null)
 				return false;

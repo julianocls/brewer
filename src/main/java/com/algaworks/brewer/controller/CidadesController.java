@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -47,28 +48,29 @@ public class CidadesController {
 		return mv;
 	}
 
+	@Cacheable(value = "cidades", key = "#codigoEstado")
+	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(
+			@RequestParam(name = "estado", defaultValue = "-1") Long codigoEstado) {
+		return cidades.findByEstadoCodigo(codigoEstado);
+	}
+
+	@CacheEvict(value = "cidades", key = "#cidade.estado.codigo", condition = "#cidade.temEstado()")
 	@PostMapping("nova")
 	public ModelAndView salvar(@Valid Cidade cidade, BindingResult result, RedirectAttributes attributes) {
 		if (result.hasErrors()) {
 			return nova(cidade);
 		}
-
+		
 		try {
 			cadastroCidadeService.salvar(cidade);
 		} catch (Exception e) {
 			result.rejectValue("nome", e.getMessage(), e.getMessage());
 			return nova(cidade);
 		}
-
+		
 		attributes.addFlashAttribute("mensagem", "Cidade salva com sucesso!");
 		return new ModelAndView("redirect:/cidades/nova");
-	}
-
-	@Cacheable("cidades")
-	@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody List<Cidade> pesquisarPorCodigoEstado(
-			@RequestParam(name = "estado", defaultValue = "-1") Long codigoEstado) {
-		return cidades.findByEstadoCodigo(codigoEstado);
 	}
 
 	@GetMapping
