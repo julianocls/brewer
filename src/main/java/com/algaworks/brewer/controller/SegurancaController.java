@@ -13,8 +13,13 @@ public class SegurancaController {
 		if (user != null) {
 			return "redirect:/cervejas";
 		}
-		
+
 		return "Login";
 	}
-	
+
+	@GetMapping("/403")
+	public String acessoNegado() {
+		return "403";
+	}
+
 }

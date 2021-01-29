@@ -6,7 +6,7 @@ public class GeracaoSenha {
 	
 	public static void main(String[] args) {
 		
-		String password = "juliano";
+		String password = "vendedor";
 		
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		System.out.println("Usuario:" + password + " => Senha: " + encoder.encode(password));

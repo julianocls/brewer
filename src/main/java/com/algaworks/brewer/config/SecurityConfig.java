@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.algaworks.brewer.security.AppUserDetailsService;
 
@@ -19,7 +20,7 @@ import com.algaworks.brewer.security.AppUserDetailsService;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	UserDetailsService userDetailsService;
+	private UserDetailsService userDetailsService;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -45,9 +46,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.loginPage("/login")
 				.permitAll()
 				.and()
-			.csrf().disable();
+			.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage("/403")
+				.and()
+			.sessionManagement()
+				.invalidSessionUrl("/login");
 	}
-
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
