@@ -21,7 +21,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import com.algaworks.brewer.validation.AtributoConfirmacao;
 
-@AtributoConfirmacao(atributo="senha", atributoConfirmacao="confirmacaoSenha", message = "A senha e a confirmação da senha não conferem.")
+@AtributoConfirmacao(atributo = "senha", atributoConfirmacao = "confirmacaoSenha"
+				, message = "Confirmação da senha não confere")
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
@@ -40,15 +41,16 @@ public class Usuario implements Serializable {
 	private String email;
 
 	private String senha;
-
-	private Boolean ativo;
-
+	
 	@Transient
 	private String confirmacaoSenha;
 
-	@Size(min = 1,  message = "Selecione pelo menos um grupo")
+	private Boolean ativo;
+
+	@Size(min = 1, message = "Selecione pelo menos um grupo")
 	@ManyToMany
-	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "codigo_usuario"), inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))
+	@JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "codigo_usuario")
+				, inverseJoinColumns = @JoinColumn(name = "codigo_grupo"))	
 	private List<Grupo> grupos;
 
 	@Column(name = "data_nascimento")
