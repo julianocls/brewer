@@ -21,5 +21,13 @@ public class UsuarioSistema extends User {
 	public Usuario getUsuario() {
 		return usuario;
 	}
+	
+	public String getPrimeiroNome() {
+		Integer indice = usuario.getNome().indexOf(" ");
+		if (indice > 0) {
+			return usuario.getNome().substring(0, indice);
+		}
+		return usuario.getNome();
+	}
 
 }

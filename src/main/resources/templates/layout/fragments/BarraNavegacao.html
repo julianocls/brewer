@@ -20,11 +20,12 @@
 
     <ul class="nav navbar-nav  navbar-right">
     	<li>
-    		<p class="navbar-text" th:text="'Olá, ' + ${#authentication.principal.usuario.nome}"> </p>
+    		<!--  <p class="navbar-text" th:text="'Olá, ' + ${#authentication.principal.usuario.nome}"> </p> -->
+    		<p class="navbar-text" th:text="'Olá, ' + ${#authentication.principal.primeiroNome}"> </p>
     	</li>
     
     	<li>
-        	<a th:href="@{/logout}"><em class="fa  fa-sign-out"></em></a>
+        	<a th:href="@{/logout}"><em class="fa  fa-sign-out"></em> Sair </a>
       	</li> 
     </ul>
 
