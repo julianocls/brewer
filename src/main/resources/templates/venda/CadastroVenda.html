@@ -7,9 +7,9 @@
 
 <head>
 	<title>Cadastro de venda</title>
-
-	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>	
-	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>	
+	
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.min.css}"/>
+	<link rel="stylesheet" th:href="@{/stylesheets/vendors/easy-autocomplete.themes.min.css}"/>
 </head>
 
 <section layout:fragment="conteudo">
@@ -163,6 +163,7 @@
 	</div>
 	
 	<th:block th:replace="cliente/PesquisaRapidaClientes :: pesquisaRapidaClientes"></th:block>
+	<th:block th:replace="hbs/TemplateAutocompleteCerveja"></th:block>
 </section>
 
 <th:block layout:fragment="javascript-extra">
