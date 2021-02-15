@@ -1,6 +1,6 @@
 package com.algaworks.brewer.venda;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 
@@ -39,10 +39,12 @@ public class TabelaItensVendaTest {
 	@Test
 	public void deveCalcularValorTotalComVariosItens() throws Exception {
 		Cerveja c1 = new Cerveja();
+		c1.setCodigo(1L);
 		BigDecimal v1 = new BigDecimal(6.00);
 		c1.setValor(v1);
 		
 		Cerveja c2 = new Cerveja();
+		c1.setCodigo(2L);
 		BigDecimal v2 = new BigDecimal(5.00);
 		c2.setValor(v2);		
 		
@@ -51,5 +53,20 @@ public class TabelaItensVendaTest {
 		
 		assertEquals(new BigDecimal(16.00), tabelaItensVenda.getValorTotal());
 	}
+	
+	
+	@Test
+	public void deveManterTamanhoDaListaParaMesmaCerveja() throws Exception {
+		Cerveja c1 = new Cerveja();
+		c1.setCodigo(1L);
+		c1.setValor(new BigDecimal(9.00));
+		
+		tabelaItensVenda.adicionarItem(c1, 1);
+		tabelaItensVenda.adicionarItem(c1, 1);
+		
+		assertEquals(1, tabelaItensVenda.total());
+		assertEquals(new BigDecimal(18.00), tabelaItensVenda.getValorTotal());
+	}
+	
 }
 
