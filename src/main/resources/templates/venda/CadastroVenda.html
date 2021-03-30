@@ -69,7 +69,7 @@
 				<div class="form-group  col-sm-4  bw-required" brewer:classforerror="cliente.codigo">
 					<label class="control-label" for="nomeCliente">Cliente</label>
 					<div class="input-group">
-				      <input id="nomeCliente" type="text" readonly="readonly" class="form-control" th:field="*{cliente.nome}"
+				      <input id="nomeCliente" type="text" readonly="readonly" class="form-control" th:field="*{cliente.nome}" 
 				      	placeholder="Clique na lupa para pesquisar o cliente"/>
 				      <input id="codigoCliente" type="hidden" th:field="*{cliente}"/>
 				      <span class="input-group-btn">
@@ -93,7 +93,7 @@
 					<label class="control-label" for="valorDesconto">Valor do desconto</label>
 					<div class="input-group">
 	      				<div class="input-group-addon">R$</div> 
-						<input type="text" maxlength="14" class="form-control  js-decimal" id="valorDesconto" th:field="*{valorDesconto}" data:valor="valorDesconto"/>
+						<input type="text" maxlength="14" class="form-control  js-decimal" id="valorDesconto" th:field="*{valorDesconto}" data:valor="${valorDesconto}"/>
 					</div>
 				</div>
 			</div>
