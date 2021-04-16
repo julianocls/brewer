@@ -191,23 +191,24 @@ public class Venda {
 		this.itens.forEach(i -> i.setVenda(this));
 	}
 	
-	public void calcularValorTotal() {
-		BigDecimal valorTotalItens = getItens().stream()
+	public BigDecimal getValorTotalItens() {
+		return getItens().stream()
 				.map(ItemVenda::getValorTotal)
 				.reduce(BigDecimal::add)
 				.orElse(BigDecimal.ZERO);
-		
-		this.valorTotal = calculaValorTotal(valorTotalItens, getValorFrete(), getValorDesconto());
 	}
-
-	private BigDecimal calculaValorTotal(BigDecimal valorTotalItens, BigDecimal valorFrete, BigDecimal valorDesconto) {
+	
+	public void calcularValorTotal() {
+		this.valorTotal = calcularValorTotal(getValorTotalItens(), getValorFrete(), getValorDesconto());
+	}
+	
+	private BigDecimal calcularValorTotal(BigDecimal valorTotalItens, BigDecimal valorFrete, BigDecimal valorDesconto) {
 		BigDecimal valorTotal = valorTotalItens
 				.add(Optional.ofNullable(valorFrete).orElse(BigDecimal.ZERO))
 				.subtract(Optional.ofNullable(valorDesconto).orElse(BigDecimal.ZERO));
-		
 		return valorTotal;
-	}	
-	
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -197,6 +197,10 @@ public class Cerveja implements Serializable {
 	public String getFotoOuMock() {
 		return !StringUtils.isEmpty(foto) ? foto : "cerveja-mock.png";
 	}
+	
+	public boolean temFoto() {
+		return !StringUtils.isEmpty(this.foto);
+	}
 
 	@Override
 	public int hashCode() {
