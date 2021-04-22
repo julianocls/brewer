@@ -24,6 +24,8 @@ public class FotoStorageLocal implements FotoStorage {
 	private Path local;
 	private Path localTemporario;
 	
+	private static final String THUMBNAIL_PREFIX = "thumbnail.";
+	
 	public FotoStorageLocal() {
 		this(getDefault().getPath(System.getenv("HOME"), ".brewerfotos"));
 	}
@@ -84,7 +86,7 @@ public class FotoStorageLocal implements FotoStorage {
 	
 	@Override
 	public byte[] recuperarThumbnail(String fotoCerveja) {
-		return recuperar("thumbnail." + fotoCerveja);
+		return recuperar(THUMBNAIL_PREFIX + fotoCerveja);
 	}
 	
 	private void criarPastas() {
@@ -112,6 +114,16 @@ public class FotoStorageLocal implements FotoStorage {
 		
 		return novoNome;
 		
+	}
+
+	@Override
+	public void excluir(String foto) {
+		try {
+			Files.deleteIfExists(this.local.resolve(foto));
+			Files.deleteIfExists(this.local.resolve(THUMBNAIL_PREFIX + foto));
+		} catch (IOException e) {
+			logger.warn(String.format("Erro apagando foto '%s'. Mensagem: %s", foto, e.getMessage()));
+		}
 	}
 
 }
