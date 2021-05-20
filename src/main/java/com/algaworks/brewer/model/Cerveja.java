@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Max;
@@ -83,6 +84,9 @@ public class Cerveja implements Serializable {
 
 	@Column(name = "content_type")
 	private String contentType;
+	
+	@Transient
+	private boolean novaFoto;
 
 	@PrePersist
 	@PreUpdate
@@ -200,6 +204,18 @@ public class Cerveja implements Serializable {
 	
 	public boolean temFoto() {
 		return !StringUtils.isEmpty(this.foto);
+	}
+	
+	public boolean isNova() {
+		return codigo == null;
+	}
+
+	public boolean isNovaFoto() {
+		return novaFoto;
+	}
+
+	public void setNovaFoto(boolean novaFoto) {
+		this.novaFoto = novaFoto;
 	}
 
 	@Override
