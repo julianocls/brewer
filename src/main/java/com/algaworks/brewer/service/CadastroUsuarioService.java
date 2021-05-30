@@ -24,8 +24,8 @@ public class CadastroUsuarioService {
 
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
-		Optional<Usuario> usuarioOptional = usuarios.findByEmailIgnoreCase(usuario.getEmail());
-		if (usuarioOptional.isPresent()) {
+		Optional<Usuario> usuarioExistente = usuarios.findByEmailIgnoreCase(usuario.getEmail());
+		if (usuarioExistente.isPresent() && !usuarioExistente.get().equals(usuario)) {
 			throw new EMailUsuarioJaCadastradoException("O E-Mail informado já foi associado a um usuário.");
 		}
 
@@ -33,12 +33,18 @@ public class CadastroUsuarioService {
 			throw new SenhaObrigatoriaUsuarioException("É obrigatório informar a senha  para novo usuário.");
 		}
 
-		if (usuario.isNovo()) {
-			usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-			usuario.setConfirmacaoSenha(usuario.getSenha());
+		if (usuario.isNovo() || !StringUtils.isEmpty(usuario.getSenha())) {
+			usuario.setSenha(this.passwordEncoder.encode(usuario.getSenha()));
+		} else if (StringUtils.isEmpty(usuario.getSenha())) {
+			usuario.setSenha(usuarioExistente.get().getSenha());
+		}
+		usuario.setConfirmacaoSenha(usuario.getSenha());
+		
+		if(!usuario.isNovo() && usuario.getAtivo() == null) {
+			usuario.setAtivo(usuarioExistente.get().getAtivo());
 		}
 
-		return usuarios.saveAndFlush(usuario);
+		return usuarios.save(usuario);
 	}
 	
 	@Transactional
