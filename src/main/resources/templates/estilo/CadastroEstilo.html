@@ -12,17 +12,30 @@
 
 	<div class="page-header">
 		<div class="container-fluid">
-			<h1>
-				Cadastro de estilo
-			</h1>
+			<div class="row">
+				<div class="col-xs-10">
+					<h1 th:if="${estilo.novo}">Cadastro de estilo</h1>
+					<h1 th:unless="${estilo.novo}">Edição de estilo - [[${estilo.nome}]]</h1>
+				</div>
+				
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/estilos}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Pesquisa</span>
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	
 	<div class="container-fluid">
 		<th:block th:include="fragments/MensagemSucesso"></th:block>
 	
-		<form method="POST" th:object="${estilo}" th:action="@{/estilos/novo}">
+		<form method="POST" th:object="${estilo}" th:action="${estilo.novo} ? @{/estilos/novo} : @{/estilos/{codigo}(codigo=${estilo.codigo})}">
 			<th:block th:include="fragments/MensagensErroValidacao"></th:block>
+			
+			<input type="hidden" th:field="*{codigo}">			
 			
 			<div class="row">
 				<div class="form-group  col-sm-12  bw-required" th:classappend="${#fields.hasErrors('nome')} ? has-error">
