@@ -61,7 +61,7 @@ public class CadastroUsuarioService {
 			usuarios.delete(usuario);
 			usuarios.flush();
 		} catch (PersistenceException e) {
-			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este usuário já foi usado.");
+			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este usuário já foi utilizado.");
 		}
 	}	
 	

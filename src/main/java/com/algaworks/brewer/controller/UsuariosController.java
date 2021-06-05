@@ -106,7 +106,6 @@ public class UsuariosController {
 		} catch (ImpossivelExcluirEntidadeException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		
 		return ResponseEntity.ok().build();		
 	}
 

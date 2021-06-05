@@ -41,7 +41,7 @@ public class ClientesImpl implements ClientesQueries {
 		
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
-	
+
 	private Long total(ClienteFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
 		adicionarFiltro(filtro, criteria);
