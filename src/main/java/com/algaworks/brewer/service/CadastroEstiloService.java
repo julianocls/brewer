@@ -35,7 +35,7 @@ public class CadastroEstiloService {
 			estilos.delete(estilo);
 			estilos.flush();
 		} catch (PersistenceException e) {
-			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este estilo já foi usado em uma cerveja.");
+			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este estilo foi utilizado em uma cerveja.");
 		}
 	}
 	

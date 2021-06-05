@@ -29,7 +29,7 @@ public class CadastroClienteService {
 		
 		Optional<Cliente> clienteExistente = clientes.findByCpfOuCnpj(cliente.getCpfOuCnpjSemFormatacao());
 		if (clienteExistente.isPresent()) {
-			if (!cliente.getCodigo().equals(clienteExistente.get().getCodigo())) {
+			if (cliente.isNovo() || !cliente.getCodigo().equals(clienteExistente.get().getCodigo())) {
 				throw new CpfCnpjClienteJaCadastradoException(
 						"CPF ou CNPJ já cadastrado para o cliente \"" + clienteExistente.get().getNome() + "\"!");
 			}
@@ -58,7 +58,7 @@ public class CadastroClienteService {
 			clientes.delete(cliente);
 			clientes.flush();
 		} catch (PersistenceException e) {
-			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este cliente já foi utilizado.");
+			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Este cliente foi utilizado em outro cadastro.");
 		}		
 	}	
 

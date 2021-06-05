@@ -40,7 +40,7 @@ public class CadastroCervejaService {
 			cervejas.flush();
 			fotoStorage.excluir(foto);
 		} catch (PersistenceException e) {
-			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Esta cerveja já foi usada em uma venda.");
+			throw new ImpossivelExcluirEntidadeException("Exclusão não permitida. Esta cerveja foi utilizada em uma venda.");
 		}
 	}
 
