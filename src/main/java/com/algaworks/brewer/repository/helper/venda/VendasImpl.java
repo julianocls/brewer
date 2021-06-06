@@ -1,7 +1,13 @@
 package com.algaworks.brewer.repository.helper.venda;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.MonthDay;
+import java.time.Year;
+import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,6 +25,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.algaworks.brewer.dto.VendaMes;
+import com.algaworks.brewer.model.StatusVenda;
 import com.algaworks.brewer.model.TipoPessoa;
 import com.algaworks.brewer.model.Venda;
 import com.algaworks.brewer.repository.filter.VendaFilter;
@@ -53,12 +61,64 @@ public class VendasImpl implements VendasQueries {
 		return (Venda) criteria.uniqueResult();
 	}	
 	
+	@Override
+	public BigDecimal valorTotalNoAno() {
+		Optional<BigDecimal> optional = Optional.ofNullable(
+				manager.createQuery("select sum(valorTotal) from Venda where status = :status and year(dataCriacao) = :ano", BigDecimal.class)
+				.setParameter("ano", Year.now().getValue())
+				.setParameter("status", StatusVenda.EMITIDA)
+				.getSingleResult());
+		return optional.orElse(BigDecimal.ZERO);
+	}	
+	
+	@Override
+	public BigDecimal valorTotalNoMes() {
+		Optional<BigDecimal> optional = Optional.ofNullable(
+				manager.createQuery("select sum(valorTotal) from Venda where status = :status and month(dataCriacao) = :mes", BigDecimal.class)
+				.setParameter("mes", MonthDay.now().getMonthValue())
+				.setParameter("status", StatusVenda.EMITIDA)
+				.getSingleResult());
+		return optional.orElse(BigDecimal.ZERO);
+	}
+	
+	@Override
+	public BigDecimal valorTicketMedioNoAno() {
+		Optional<BigDecimal> optional = Optional.ofNullable(
+				manager.createQuery("select sum(valorTotal) / count(*) from Venda where status = :status and year(dataCriacao) = :ano", BigDecimal.class)
+				.setParameter("ano", Year.now().getValue())
+				.setParameter("status", StatusVenda.EMITIDA)
+				.getSingleResult());
+		return optional.orElse(BigDecimal.ZERO);
+	}	
+	
 	private Long total(VendaFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Venda.class);
 		adicionarFiltro(filtro, criteria);
 		criteria.setProjection(Projections.rowCount());
 		return (Long) criteria.uniqueResult();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VendaMes> totalPorMes() {
+		
+		List<VendaMes> vendaMes = manager.createNamedQuery("Vendas.totalPorMes").getResultList();
+		
+		LocalDate hoje = LocalDate.now();
+		for (int i = 1; i <=6; i++) {
+			
+			String mesIdeal = String.format("%d/%02d", hoje.getYear(), hoje.getMonthValue());
+			
+			boolean possuiMes = vendaMes.stream().filter( v -> v.getMes().equals(mesIdeal)).findAny().isPresent();
+			if(!possuiMes) {
+				vendaMes.add(i - 1, new VendaMes(mesIdeal, 0));
+			}
+			
+			hoje = hoje.minusMonths(1);
+		}
+		
+		return vendaMes;
+	}	
 	
 	private void adicionarFiltro(VendaFilter filtro, Criteria criteria) {
 		criteria.createAlias("cliente", "c");
