@@ -42,6 +42,12 @@ public class ClientesImpl implements ClientesQueries {
 		return new PageImpl<>(criteria.list(), pageable, total(filtro));
 	}
 
+	@Transactional(readOnly = true)
+	@Override
+	public Long totalDeClientes() {
+		return total(null);
+	}	
+	
 	private Long total(ClienteFilter filtro) {
 		Criteria criteria = manager.unwrap(Session.class).createCriteria(Cliente.class);
 		adicionarFiltro(filtro, criteria);
@@ -60,5 +66,6 @@ public class ClientesImpl implements ClientesQueries {
 			}
 		}
 	}
+
 
 }
