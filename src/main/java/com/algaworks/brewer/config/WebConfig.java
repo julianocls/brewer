@@ -2,7 +2,6 @@ package com.algaworks.brewer.config;
 
 import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.BeansException;
@@ -19,16 +18,13 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.data.repository.support.DomainClassConverter;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
-import org.springframework.format.number.NumberStyleFormatter;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.i18n.FixedLocaleResolver;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -37,6 +33,7 @@ import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
+import com.algaworks.brewer.config.format.BigDecimalFormatter;
 import com.algaworks.brewer.controller.CervejasController;
 import com.algaworks.brewer.controller.converter.CidadeConverter;
 import com.algaworks.brewer.controller.converter.EstadoConverter;
@@ -107,10 +104,10 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		conversionService.addConverter(new EstadoConverter());
 		conversionService.addConverter(new GrupoConverter());
 		
-		NumberStyleFormatter bigDecimalFormatter = new NumberStyleFormatter("#,##0.00");
+		BigDecimalFormatter bigDecimalFormatter = new BigDecimalFormatter("#,##0.00");
 		conversionService.addFormatterForFieldType(BigDecimal.class, bigDecimalFormatter);
 		
-		NumberStyleFormatter integerFormatter = new NumberStyleFormatter("#,##0");
+		BigDecimalFormatter integerFormatter = new BigDecimalFormatter("#,##0");
 		conversionService.addFormatterForFieldType(Integer.class, integerFormatter);
 		
 		DateTimeFormatterRegistrar dateTimeFormatter = new DateTimeFormatterRegistrar();
@@ -119,11 +116,6 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 		dateTimeFormatter.registerFormatters(conversionService);
 		
 		return conversionService;
-	}
-	
-	@Bean
-	public LocaleResolver localeResolver() {
-		return new FixedLocaleResolver(new Locale("pt", "BR"));
 	}
 	
 	@Bean

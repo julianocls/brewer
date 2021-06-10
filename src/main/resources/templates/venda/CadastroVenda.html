@@ -19,8 +19,8 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-10">
-					<h1 th:if="${venda.nova}">Cadastro de venda</h1>
-					<h1 th:unless="${venda.nova}">Edição da venda nº [[${venda.codigo}]]</h1>
+					<h1 th:if="${venda.nova}" th:text="#{venda.cadastro.titulo}">Cadastro de venda</h1>
+					<h1 th:unless="${venda.nova}" th:text="#{venda.edicao.titulo(${venda.codigo})}">Edição da venda nº </h1>
 				</div>
 			</div>
 		</div>
@@ -152,9 +152,9 @@
 				</div>
 			</div>
 			
-			<div class="row" style="clear: both" th:if="${venda.salvarPermitido}">
+			<div class="row" style="clear: both">
 				<div class="col-lg-12">
-					<div class="btn-group">
+					<div class="btn-group" th:if="${venda.salvarPermitido}">
 					  <button type="submit" class="btn  btn-primary  js-submit-btn" data:acao="salvar">Salvar</button>
 					  <button type="button" class="btn  btn-primary  dropdown-toggle" data-toggle="dropdown">
 					    <span class="caret"></span>
@@ -166,7 +166,7 @@
 					  </ul>
 					</div>
 				
-					<button class="btn  btn-danger  js-submit-btn" data:acao="cancelar" th:unless="${venda.nova}">Cancelar</button>
+					<button class="btn  btn-danger  js-submit-btn" data:acao="cancelar" th:if="${venda.cancelarPermitido}">Cancelar Venda</button>
 				</div>
 			</div>
 		</form>

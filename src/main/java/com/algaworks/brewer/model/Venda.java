@@ -198,6 +198,10 @@ public class Venda {
 		return ! isSalvarPermitido();
 	}
 	
+	public boolean isCancelarPermitido() {
+		return status.equals(StatusVenda.EMITIDA);
+	}
+	
 	public void adicionarItens(List<ItemVenda> itens) {
 		this.itens = itens;
 		this.itens.forEach(i -> i.setVenda(this));
