@@ -21,6 +21,8 @@ import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.DefaultFormattingConversionService;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -134,13 +136,26 @@ public class WebConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource bundle = new ReloadableResourceBundleMessageSource();
 		bundle.setBasename("classpath:/messages");
-		bundle.setDefaultEncoding("UTF-8");
+		bundle.setDefaultEncoding("UTF-8"); // https://www.utf8-chartable.de/
 		return bundle;
 	}
 	
 	@Bean
 	public DomainClassConverter<FormattingConversionService> domainClassConvertion() {
 		return new DomainClassConverter<FormattingConversionService>(mvcConversionService());
+	}
+	
+	@Bean
+	public LocalValidatorFactoryBean validator() {
+		LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+		validatorFactoryBean.setValidationMessageSource(messageSource());
+		
+		return validatorFactoryBean;
+	}
+	
+	@Override
+	public Validator getValidator() {
+		return validator();
 	}
 	
 }

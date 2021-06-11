@@ -82,7 +82,8 @@ Brewer.TabelaItens = (function() {
 	function bindDaQuantidade() {
 		var quantidadeItemInput = $('.js-tabela-cerveja-quantidade-item');
 		quantidadeItemInput.on('change', onQuantidadeItemAlterado.bind(this));
-		quantidadeItemInput.maskMoney({ precision: 0, thousands: '' });		
+		//quantidadeItemInput.maskMoney({ precision: 0, thousands: '' });
+		quantidadeItemInput.maskNumber({ integer: true, thousands: '' });						
 	}
 	
 	function bindTabelaItem() {

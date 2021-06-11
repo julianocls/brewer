@@ -38,7 +38,7 @@ public class Cerveja implements Serializable {
 	private Long codigo;
 
 	@SKU
-	@NotBlank(message = "SKU é obrigatório")
+	@NotBlank
 	private String sku;
 
 	@NotBlank(message = "Nome é obrigatório")
@@ -53,13 +53,14 @@ public class Cerveja implements Serializable {
 	@DecimalMax(value = "9999999.99", message = "O valor da cerveja deve ser menor que R$9.999.999,99")
 	private BigDecimal valor;
 
-	@NotNull(message = "O teor alcóolico é obrigatório")
 	@DecimalMax(value = "100.0", message = "O valor do teor alcóolico deve ser menor que 100")
+	@DecimalMin(value = "00.0", message = "O valor do teor alcóolico deve ser no mínimo 0.00")
 	@Column(name = "teor_alcoolico")
 	private BigDecimal teorAlcoolico;
 
 	@NotNull(message = "A comissão é obrigatória")
 	@DecimalMax(value = "100.0", message = "A comissão deve ser igual ou menor que 100")
+	@DecimalMin(value = "00.0", message = "A comissão deve ser igual no mínimo que 0.00")
 	private BigDecimal comissao;
 
 	@NotNull(message = "A quantidade em estoque é obrigatória")
