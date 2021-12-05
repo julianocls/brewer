@@ -3,5 +3,6 @@
 * Princimais tecnologias:
    - Spring MVC;
    - Spring Security
-   - Spring JPA;
+   - Spring Data JPA;
+   - AWS JDK - S3;
    - Thymeleaf.
